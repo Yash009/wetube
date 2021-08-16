@@ -1,11 +1,11 @@
 import React from "react";
 
-const Video = () => {
+const Video = (props) => {
   return  (
     <div>
-    <h2>Title of the video</h2>
-    <h3>Date Added</h3>
-    <h3>Channel name</h3>
+        <h2>{props.title}</h2>
+        <h3>{props.dateAdded}</h3>
+        <h3>{props.channel}</h3>
     </div>
   )
 }
