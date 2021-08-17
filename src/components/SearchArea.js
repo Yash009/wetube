@@ -1,18 +1,48 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
+import Results from "./Results";
+import axios from "axios";
 
 const SearchArea = () => {
-    const [keyword, setKeyword] = useState("cricket");
-    return (
-        <div className="">
-            <form>
-                <label htmlFor="">
-                    Search
-                    <input type="text" id="keyword" value = {keyword} onChange ={(e) => setKeyword(e.target.value)}></input>
-                </label>
-                <button>Submit</button>
-            </form>
-        </div>
-    )
-}
+  const [keyword, setKeyword] = useState("budgies");
+  const [videos, setVideos] = useState([]);
 
-export default SearchArea
+  async function requestSearch() {
+    axios
+      .get(
+        `https://youtube.googleapis.com/youtube/v3/search?type=video&part=snippet&maxResults=25&q=${keyword}&key=AIzaSyDicV4YoIuyEm_h8h3_7QtE3q56Ni5hB7U`
+      )
+      .then((res) => {
+        const { items } = res.data;
+        console.log(items);
+        setVideos(items || []);
+      })
+      .catch((err) => console.log(err));
+
+    console.log("Video request submitted");
+  }
+
+  return (
+    <div className="search-area">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          requestSearch();
+        }}
+      >
+        <label htmlFor="keyword">
+          Search
+          <input
+            id="keyword"
+            value={keyword}
+            placeholder="Search Keyword"
+            onChange={(e) => setKeyword(e.target.value)}
+          />
+        </label>
+        <button>Submit</button>
+      </form>
+      <Results videos={videos} />
+    </div>
+  );
+};
+
+export default SearchArea;
