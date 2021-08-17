@@ -9,7 +9,7 @@ const SearchArea = () => {
   async function requestSearch() {
     axios
       .get(
-        `https://youtube.googleapis.com/youtube/v3/search?type=video&part=snippet&maxResults=25&q=${keyword}&key=AIzaSyDicV4YoIuyEm_h8h3_7QtE3q56Ni5hB7U`
+        `https://youtube.googleapis.com/youtube/v3/search?type=video&part=snippet&maxResults=25&q=${keyword}&key=${process.env.API_KEY}`
       )
       .then((res) => {
         const { items } = res.data;
